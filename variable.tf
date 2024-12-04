@@ -1,0 +1,81 @@
+variable "create_vpc" {
+  description = "Set to true to create a VPC"
+  type        = bool
+  default     = false
+}
+
+variable "create_ec2" {
+  description = "Set to true to create an EC2 instance"
+  type        = bool
+  default     = false
+}
+
+variable "create_s3" {
+  description = "Set to true to create an S3 bucket"
+  type        = bool
+  default     = false
+}
+
+variable "create_autoscaling" {
+  description = "Set to true to create an Auto Scaling group"
+  type        = bool
+  default     = false
+}
+
+variable "vpc_cidr" {
+  description = "CIDR block for the VPC"
+  type        = string
+  default     = "10.0.0.0/16"
+}
+
+variable "subnet_cidr" {
+  description = "CIDR block for the Subnet"
+  type        = string
+  default     = "10.0.1.0/24"
+}
+
+variable "availability_zone" {
+  description = "Availability zone for resources"
+  type        = string
+  default     = "us-east-1a"
+}
+
+variable "ami_id" {
+  description = "AMI ID for the EC2 instance"
+  type        = string
+}
+
+variable "instance_type" {
+  description = "Instance type for EC2"
+  type        = string
+  default     = "t2.micro"
+}
+
+variable "key_pair_name" {
+  description = "Key pair name for EC2"
+  type        = string
+}
+
+variable "s3_bucket_name" {
+  description = "Name prefix for the S3 bucket"
+  type        = string
+}
+
+variable "autoscaling_desired_capacity" {
+  description = "Desired capacity for the Auto Scaling group"
+  type        = number
+  default     = 1
+}
+
+variable "autoscaling_max_size" {
+  description = "Maximum size for the Auto Scaling group"
+  type        = number
+  default     = 2
+}
+
+variable "autoscaling_min_size" {
+  description = "Minimum size for the Auto Scaling group"
+  type        = number
+  default     = 1
+}
+
