@@ -79,3 +79,18 @@ variable "autoscaling_min_size" {
   default     = 1
 }
 
+variable "security_group_id" {
+  description = "Security Group ID for EC2 instance"
+  type        = string
+}
+
+variable "subnet_id" {
+  description = "Subnet ID for EC2 instance"
+  type        = string
+}
+
+variable "aws_region" {
+  description = "AWS Region where resources will be deployed"
+  type        = string
+}
+
