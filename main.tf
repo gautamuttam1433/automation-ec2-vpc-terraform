@@ -21,7 +21,7 @@ resource "aws_instance" "main" {
   count         = var.create_ec2 ? 1 : 0
   ami           = var.ami_id
   instance_type = var.instance_type
-  subnet_id     = aws_subnet.main[0].id
+  subnet_id     = var.create_vpc ? aws_subnet.main[0].id : var.subnet_id 
   key_name      = var.key_pair_name
   tags          = { Name = "Main-EC2" }
 }
