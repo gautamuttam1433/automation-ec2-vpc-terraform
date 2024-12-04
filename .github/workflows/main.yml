@@ -1,0 +1,75 @@
+name: Terraform CI/CD Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      create_vpc:
+        description: "Do you want to create a VPC?"
+        required: true
+        type: choice
+        options:
+          - "true"
+          - "false"
+      create_ec2:
+        description: "Do you want to create an EC2 instance?"
+        required: true
+        type: choice
+        options:
+          - "true"
+          - "false"
+      create_s3:
+        description: "Do you want to create an S3 bucket?"
+        required: true
+        type: choice
+        options:
+          - "true"
+          - "false"
+      create_autoscaling:
+        description: "Do you want to create an Auto Scaling group?"
+        required: true
+        type: choice
+        options:
+          - "true"
+          - "false"
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.5.0
+
+    - name: Terraform Init
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: terraform init
+
+    - name: Terraform Plan
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        terraform plan \
+          -var "create_vpc=${{ github.event.inputs.create_vpc }}" \
+          -var "create_ec2=${{ github.event.inputs.create_ec2 }}" \
+          -var "create_s3=${{ github.event.inputs.create_s3 }}" \
+          -var "create_autoscaling=${{ github.event.inputs.create_autoscaling }}"
+
+    - name: Terraform Apply
+      if: github.event_name == 'workflow_dispatch'
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        terraform apply -auto-approve \
+          -var "create_vpc=${{ github.event.inputs.create_vpc }}" \
+          -var "create_ec2=${{ github.event.inputs.create_ec2 }}" \
+          -var "create_s3=${{ github.event.inputs.create_s3 }}" \
+          -var "create_autoscaling=${{ github.event.inputs.create_autoscaling }}"
