@@ -1,3 +1,8 @@
+provider "aws" {
+  region = var.aws_region
+}
+
+
 resource "aws_vpc" "main" {
   count      = var.create_vpc ? 1 : 0
   cidr_block = var.vpc_cidr
