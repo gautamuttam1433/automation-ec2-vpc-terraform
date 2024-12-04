@@ -11,3 +11,4 @@ availability_zone   = "us-east-1a"
 autoscaling_desired_capacity = 1
 autoscaling_max_size         = 2
 autoscaling_min_size         = 1
+aws_region          = "us-east-1"
