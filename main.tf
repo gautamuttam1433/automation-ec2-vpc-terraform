@@ -60,6 +60,6 @@ resource "aws_autoscaling_group" "main" {
     version = "$Latest"
   }
 
-  vpc_zone_identifier = [aws_subnet.main[0].id]
+  vpc_zone_identifier = var.create_vpc ? [aws_subnet.main[0].id] : [var.subnet_id]
 }
 
