@@ -55,7 +55,7 @@ on:
       subnet_id:
         description: "Subnet ID for EC2 instance"
         required: true
-        default: "subnet-07cf443982d899eef"
+        default: "subnet-00447dd4ed0634fcb"
       security_group_id:
         description: "Security Group ID for EC2 instance"
         required: true
